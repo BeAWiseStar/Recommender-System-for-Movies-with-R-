@@ -28,9 +28,9 @@ ratings = read.csv("ml-20m/ratings.csv")
 genres = c()
 
 #repeat the number of rows times in movies
-for(i in 1:length(movies$genres)){
+for(i in 1:length(movie_gg$genres)){
   #split the string in genres by '|' and unlist
-  gen = unlist(strsplit(movies$genres[i], fixed = TRUE, split = '|'))
+  gen = unlist(strsplit(movie_gg$genres[i], fixed = TRUE, split = '|'))
   #repeat the number of genres times. x is the name of genre
   for(x in gen){
     #if x is not in genres vector
@@ -38,15 +38,18 @@ for(i in 1:length(movies$genres)){
       #put x in the vector
       genres = c(genres, x)
       #then append the column to movies dataframe which is initialized by 0
-      movies = cbind(movies, rep(0, times = nrow(movies)))
+      movie_gg = cbind(movie_gg, rep(0, times = nrow(movie_gg)))
       #change the name of column to x
-      colnames(movies)[match(x, genres) + 3] = x
+      colnames(movie_gg)[match(x, genres) + 6] = x
     }
     
     #replace the value to 1 where the row has the genre
-    movies[i, which(colnames(movies) == x)] = 1
+    movie_gg[i, which(colnames(movie_gg) == x)] = 1
   }
 }
+
+#repeat the number of rows times in movies
+
 
 #4.merge movies with ratings
 
