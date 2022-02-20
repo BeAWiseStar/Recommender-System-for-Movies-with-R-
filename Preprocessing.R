@@ -19,10 +19,15 @@ ratings = read.csv("ml-20m/ratings.csv")
 #Preprocessing Pipeline
 
 #1.get max relevant tagId assigned to each movieId from genome_scores
+genome_s = merge(x=genome_scores, y=genome_tags, by="tagId")
 
+genome_max <- genome_s %>%
+  group_by(movieId) %>%      # group your data on movieId
+  arrange(desc(relevance)) %>%     # order in descending
+  slice(1)  #get first value
 
 #2.merge genome_scores with movies using movieID into movies
-
+movie_gg = merge(x=movies, y=genome_max, by="movieId")
 
 #3.split movies.genres based on "|" then 1 hot encode
 genres = c()
