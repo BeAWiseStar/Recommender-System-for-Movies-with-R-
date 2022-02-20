@@ -31,3 +31,31 @@ ratings = read.csv("ml-20m/ratings.csv")
 
 
 #5. remove timestamp
+
+
+
+
+
+
+library(Hmisc)
+# in tag there are  38643 tags and 16 missing, 46554 rows and 4 columns
+describe(tags)
+dim(tags)
+# 4000 different relevance and mean of 0.1165, total 1128 distinct tagid, 11709768 rows 3 cols
+describe(genome_scores)
+dim(genome_scores)
+# 1128 distinct tag and tagid 1128 row 2 columns
+describe(genome_tags)
+dim(genome_tags)
+# missing values in tmdbId, display imbd and tmdb for each movieId, 27278 unique move id, 27278 rows and 3 columns
+describe(links)
+dim(links)
+# 27278 different movieid and 1342 distinct genres, movies and links have same size observation, 27278 rows and 3 columns
+describe(movies)
+dim(movies)
+# 10 distinct rating, 20000263 rows and 4 columns
+describe(ratings)
+dim(ratings)
+
+# only 457 movie id can be found out of 27278 movie id in movies
+length(unique(table(tags$movieId[which(tags$movieId %in% movies$movieId)])))
