@@ -53,8 +53,6 @@ for(i in 1:length(movie_gg$genres)){
   }
 }
 
-#repeat the number of rows times in movies
-
 
 #4.merge movies with ratings
 
