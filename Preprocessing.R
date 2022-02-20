@@ -25,7 +25,28 @@ ratings = read.csv("ml-20m/ratings.csv")
 
 
 #3.split movies.genres based on "|" then 1 hot encode
+genres = c()
 
+#repeat the number of rows times in movies
+for(i in 1:length(movies$genres)){
+  #split the string in genres by '|' and unlist
+  gen = unlist(strsplit(movies$genres[i], fixed = TRUE, split = '|'))
+  #repeat the number of genres times. x is the name of genre
+  for(x in gen){
+    #if x is not in genres vector
+    if(!x %in% genres){
+      #put x in the vector
+      genres = c(genres, x)
+      #then append the column to movies dataframe which is initialized by 0
+      movies = cbind(movies, rep(0, times = nrow(movies)))
+      #change the name of column to x
+      colnames(movies)[match(x, genres) + 3] = x
+    }
+    
+    #replace the value to 1 where the row has the genre
+    movies[i, which(colnames(movies) == x)] = 1
+  }
+}
 
 #4.merge movies with ratings
 
@@ -59,3 +80,5 @@ dim(ratings)
 
 # only 457 movie id can be found out of 27278 movie id in movies
 length(unique(table(tags$movieId[which(tags$movieId %in% movies$movieId)])))
+
+
