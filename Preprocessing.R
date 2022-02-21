@@ -6,14 +6,14 @@ genome_scores = read.csv("ml-20m/genome-scores.csv")
 genome_tags = read.csv("ml-20m/genome-tags.csv")
 
 #ignore links csv
-#links = read.csv("ml-20m/links.csv")
+links = read.csv("ml-20m/links.csv")
 
 movies = read.csv("ml-20m/movies.csv")
 
 ratings = read.csv("ml-20m/ratings.csv")
 
 #ignore tags csv
-#tags = read.csv("ml-20m/tags.csv")
+tags = read.csv("ml-20m/tags.csv")
 
 
 #Preprocessing Pipeline
@@ -26,8 +26,10 @@ genome_max <- genome_s %>%
   arrange(desc(relevance)) %>%     # order in descending
   slice(1)  #get first value
 
+
 #2.merge genome_scores with movies using movieID into movies
 movie_gg = merge(x=movies, y=genome_max, by="movieId")
+
 
 #3.split movies.genres based on "|" then 1 hot encode
 genres = c()
@@ -55,12 +57,14 @@ for(i in 1:length(movie_gg$genres)){
 
 
 #4.merge movies with ratings
+movie_r = merge(x=movies, y=ratings, by="movieId")
 
 
 #5. remove timestamp
+drop <- c('timestamp')
+movie_rr = movie_r[,!(names(movie_r) %in% drop)]
 
-
-
+# one hot encode??
 
 
 
